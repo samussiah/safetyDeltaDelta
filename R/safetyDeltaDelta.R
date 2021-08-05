@@ -5,13 +5,61 @@
 #' @import htmlwidgets
 #'
 #' @export
-safetyDeltaDelta <- function(settings, data, width = NULL, height = NULL, elementId = NULL) {
+safetyDeltaDelta <- function(
+    data,
+    id_col = 'USUBJID',
+    visit_col = 'VISIT',
+    visit_order_col = 'VISITNUM',
+    measure_col = 'TEST',
+    measure_order_col = 'TESTN',
+    value_col = 'STRESN',
+    unit_col = 'STRESU',
+    filters = NULL,
+    details = NULL,
+    measure = list(
+        x = NULL,
+        y = NULL
+    ),
+    visits =  list(
+        timepoint1 = list(),
+        timepoint2 = list(),
+        stat = 'mean'
+    ),
+    add_regression_line = TRUE,
+    custom_settings = NULL,
+    width = NULL,
+    height = NULL,
+    elementId = NULL
+) {
+print(custom_settings)
+    # Map R function arguments to list.
+    settings <- NULL
+    if (!is.null(custom_settings)) {
+        settings = custom_settings
+    } else {
+        settings = list(
+            id_col = id_col,
+            visit_col = visit_col,
+            visit_order_col = visit_order_col,
+            measure_col = measure_col,
+            measure_order_col = measure_order_col,
+            value_col = value_col,
+            unit_col = unit_col,
+            filters = filters,
+            details = details,
+            measure = measure,
+            visits =  visits,
+            add_regression_line = add_regression_line
+        )
+    }
+print(settings)
+    # Define inputs to .js function: settings and data.
     inputs <- list(
         settings = settings,
         data = data
     )
 
-    # create widget
+    # Create widget.
     htmlwidgets::createWidget(
         name = "safetyDeltaDelta",
         inputs,
